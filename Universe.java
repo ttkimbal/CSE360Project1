@@ -73,6 +73,9 @@ public class Universe extends JFrame
         {
             JSlider src = (JSlider)e.getSource();
 
+            if (container.getComponentCount() > 3)
+                container.remove(authorPanel);
+
             // If the slider is not moving
             if (!src.getValueIsAdjusting())
             {
