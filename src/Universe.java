@@ -25,7 +25,7 @@ public class Universe extends JFrame
     public Universe()
     {
         // Setting up JFrame
-        frame = new JFrame("Project 1");
+        frame = new JFrame("GoodTutor");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setPreferredSize(new Dimension(1560, 1080));
 
