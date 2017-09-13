@@ -51,7 +51,7 @@ public class Assessor extends JPanel implements ActionListener
 		{
 			// Initialize combo box and add to panel
     		String[] options = {"Option 1", "Option 2", "Option 3"};
-            comboBox =  new JComboBox(options);
+            comboBox =  new JComboBox<String>(options);
             panel.add(comboBox, c);
 			comboBox.addActionListener(this);
 
@@ -64,7 +64,9 @@ public class Assessor extends JPanel implements ActionListener
 		{
 			// Set GridBagConstraints for correct format
 			c.fill = GridBagConstraints.VERTICAL;
+			c.weightx = 1;
 			c.gridx = 0;
+			c.insets = new Insets(0,50,50,0);
 
 			// Initialize check box 1 and add to panel
     		checkBox1 = new JCheckBox("Option 1");
@@ -93,7 +95,9 @@ public class Assessor extends JPanel implements ActionListener
 		{
 			// Set GridBagConstraints for correct format
 			c.fill = GridBagConstraints.VERTICAL;
+			c.weightx = 1;
 			c.gridx = 0;
+			c.insets = new Insets(0,50,50,0);
 
 			// Initialize button 1 and add to panel
     		button1 = new JButton("Option 1");

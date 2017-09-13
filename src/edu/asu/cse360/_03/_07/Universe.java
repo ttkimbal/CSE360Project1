@@ -26,10 +26,9 @@ public class Universe extends JFrame
 
     public Universe()
     {
-        // Setting up JFrame
-        frame = new JFrame("GoodTutor");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setPreferredSize(new Dimension(1560, 1080));
+        // Setting up Universe
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(1560,1080);
 
         // Setting up JSlider
         slider = new JSlider(JSlider.HORIZONTAL, 1, 4, 1);
@@ -61,11 +60,10 @@ public class Universe extends JFrame
         container.add(assessorPanel);
         container.add(authorPanel);
 
-        // Adding container and sliderPanel to JFrame and finishing setup
-        frame.getContentPane().add(container, BorderLayout.CENTER);
-        frame.getContentPane().add(sliderPanel, BorderLayout.SOUTH);
-        frame.pack();
-        frame.setVisible(true);
+        // Adding container and sliderPanel to Universe and finishing setup
+        add(container, BorderLayout.CENTER);
+        add(sliderPanel, BorderLayout.SOUTH);
+        setVisible(true);
     }
 
     public class SliderListener implements ChangeListener
@@ -92,7 +90,6 @@ public class Universe extends JFrame
                 // Refresh container and frame
                 container.revalidate();
                 container.repaint();
-                frame.pack();
             }
         }
     }
