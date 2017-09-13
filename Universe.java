@@ -27,8 +27,8 @@ public class Universe extends JFrame
         // Setting up JFrame
         frame = new JFrame("Project 1");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(1280, 1280);
-        frame.setPreferredSize(new Dimension(1280, 1280));
+        frame.setSize(1280, 720);
+        frame.setPreferredSize(new Dimension(1280, 720));
 
         // Setting up JSlider
         slider = new JSlider(JSlider.HORIZONTAL, 1, 4, 1);

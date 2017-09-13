@@ -6,125 +6,129 @@ import javax.swing.event.*;
 
 import java.io.*;
 
-public class Assessor extends JFrame implements ActionListener{	
+public class Assessor extends JPanel implements ActionListener{	
 	int state;
-	JFrame frame = new JFrame("Assessor");
-	JPanel jp1, jp2, jp3, jp4, dia;
-    JLabel Question1, Question2, Question3, Question4, label;
+    JLabel question;
     JButton Op1JB, Op2JB, Op3JB;
     JComboBox JCB;
     JCheckBox Op1CB, Op2CB, Op3CB;
-    JDialog jDialog1 = new JDialog(frame, "Dialog", true);
-    JTextArea QuestionsText = new JTextArea(5,20); 
+    JOptionPane jDialog1 = null;
+    JTextField QuestionsText;
+	GridBagConstraints a = new GridBagConstraints();
+	JPanel panel = new JPanel(new GridBagLayout());
 	
-    public void Assessor(int state) {
-    	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLayout(new java.awt.FlowLayout());
-	    frame.setSize(300, 250); 
-	    
-    	jp1 = new JPanel();							// to create 4 JPanels 
-        jp2 = new JPanel();
-        jp3 = new JPanel();
-        jp4 = new JPanel();
+    public Assessor() {
         
-        Question1 = new JLabel("Question1");					// to set 4 questions and label by Label text
-        Question2 = new JLabel("Question2");
-        Question3 = new JLabel("Question3");
-        Question4 = new JLabel("Question4");
         
-        String[] Options = {"TOM", "BOB", "HAM"};			// 3 options by JComBox for question1
-        JCB =  new JComboBox(Options);
         
-        Op1CB = new JCheckBox("11");					// 3 options by CheakBox for question2
-        Op2CB = new JCheckBox("22");
-        Op3CB = new JCheckBox("33");
+       
         
-        Op1JB = new JButton("A");					// 3 options by JButton for question3
-        Op2JB = new JButton("B");
-        Op3JB = new JButton("C");
-        
-        Op1JB.addActionListener(this);
-        Op2JB.addActionListener(this);
-        Op3JB.addActionListener(this);
-
-      //------------------------------------------------------------------------------
-        if(state == 1) {
-        	GridLayout layout1 = new GridLayout(4,1);	// set up jp1
-        	jp1.setLayout(layout1);
-        	jp1.add(Question1);
-        	jp1.add(JCB);
-        	frame.add(jp1);
-        }
-        else if(state == 2) {
-        GridLayout layout2 = new GridLayout(4,1);	// set up jp2
-        	jp2.setLayout(layout2);
-        	jp2.add(Question2);
-        	jp2.add(Op1CB);
-        	jp2.add(Op2CB);
-        	jp2.add(Op3CB);
-        	frame.add(jp2);
-        }
-        else if(state == 3) {
-        	GridLayout layout3 = new GridLayout(4,1);	// set up jp3
-        	jp3.setLayout(layout3);
-        	jp3.add(Question3);
-        	jp3.add(Op1JB);
-        	jp3.add(Op2JB);
-        	jp3.add(Op3JB);
-        	frame.add(jp3);
-        }
-        else if(state == 4) {
-        	GridLayout layout4 = new GridLayout(2,1);	// set up jp4
-        	jp4.setLayout(layout4);
-        	jp4.add(Question4);
-        	jp4.add(QuestionsText);
-        	frame.add(jp4);
-        }
-        else if(state == 0) {
-        	frame.setLayout(new GridLayout(2,1));
+       
+     
+        	setLayout(new GridBagLayout());
             GridBagConstraints c = new GridBagConstraints();
-            frame.add(new JLabel("Zhenyu Bao"), c);
-        }
+            add(new JLabel("Zhenyu Bao"), c);
     }
         
-    public void show() {
-        frame.setVisible(true);
-    }
- 
     public void changeState(int state) {
-    	if(state == 0) {
-    		Assessor(0);
-    	}
+    	removeAll();
+    	panel.removeAll();
+    	this.setLayout(new BorderLayout());
     	if(state == 1) {
-    		Assessor(1);
-    	}
+    		GridBagConstraints a = new GridBagConstraints();
+    		String[] Options = {"TOM", "BOB", "HAM"};			// 3 options by JComBox for question1
+            JCB =  new JComboBox(Options);
+            JCB.addActionListener(this);
+           
+        	 add(new JLabel("Question 1"), BorderLayout.NORTH);
+        	 panel.add(JCB, a);
+        	 add(panel, BorderLayout.CENTER);
+        }
     	if(state == 2) {
-    		Assessor(2);
+    		Op1CB = new JCheckBox("Option 1");
+    		a.fill = GridBagConstraints.VERTICAL;
+    		a.gridx = 0;
+    		a.gridy = 1;
+    		panel.add(Op1CB, a);
+    		Op2CB = new JCheckBox("Option 2");
+    		a.fill = GridBagConstraints.VERTICAL;
+    		a.gridx = 0;
+    		a.gridy = 2;
+    		panel.add(Op2CB, a);
+    		Op3CB = new JCheckBox("Option 3");
+    		a.fill = GridBagConstraints.VERTICAL;
+    		a.gridx = 0;
+    		a.gridy = 3;
+    		panel.add(Op3CB, a);
+    	
+    		
+    		Op1CB.addActionListener(this);
+            Op2CB.addActionListener(this);
+            Op3CB.addActionListener(this);
+            add(new JLabel("Question 2"), BorderLayout.NORTH);
+            add(panel, BorderLayout.CENTER);
     	}
     	if(state == 3) {
-    		Assessor(3);
+    		Op1JB = new JButton("Option 1");
+    		a.fill = GridBagConstraints.VERTICAL;
+    		a.gridx = 0;
+    		a.gridy = 1;
+    		panel.add(Op1JB, a);
+    		Op2JB = new JButton("Option 2");
+    		a.fill = GridBagConstraints.VERTICAL;
+    		a.gridx = 0;
+    		a.gridy = 2;
+    		panel.add(Op2JB, a);
+    		Op3JB = new JButton("Option 3");
+    		a.fill = GridBagConstraints.VERTICAL;
+    		a.gridx = 0;
+    		a.gridy = 3;
+    		panel.add(Op3JB, a);
+    		Op1JB.addActionListener(this);
+            Op2JB.addActionListener(this);
+            Op3JB.addActionListener(this);
+            
+            add(new JLabel("Question 3"), BorderLayout.NORTH);
+            add(panel, BorderLayout.CENTER);
+    		
     	}
     	if(state == 4) {
-    		Assessor(4);
+    		
+    		QuestionsText  = new JTextField(100);
+    		a.weightx = 1;
+    		a.gridx = 1;
+    		a.fill = GridBagConstraints.HORIZONTAL;
+    		a.insets = new Insets(0,50,50,0);
+    		QuestionsText.addActionListener(this);
+    		panel.add(QuestionsText, a);
+    		add(new JLabel("Question 4"), BorderLayout.NORTH);
+    		add(panel, BorderLayout.CENTER);
     	}
     }
 
 
     /* listener for Jbutton */
     public void actionPerformed(ActionEvent e){
-         if(e.getActionCommand().equals("A")){
-        	 WrongDialog Jb1 = new WrongDialog(this);
-         }
-         else if(e.getActionCommand().equals("B")){
-        	 WrongDialog Jb2 = new WrongDialog(this);
-         }
-         else if(e.getActionCommand().equals("C")){
-        	 RightDialog Jb3 = new RightDialog(this);
-         }         
+    	if(e.getSource() == Op1JB )
+    	JOptionPane.showMessageDialog(this, "Button 1 was pressed");
+    	else if(e.getSource() == Op2JB )
+        	JOptionPane.showMessageDialog(this, "Button 2 was pressed");
+    	else if(e.getSource() == Op3JB )
+        	JOptionPane.showMessageDialog(this, "Button 3 was pressed");
+    	else if(e.getSource() == Op1CB )
+        	JOptionPane.showMessageDialog(this, "Check box 1 was pressed");
+    	else if(e.getSource() == Op2CB )
+        	JOptionPane.showMessageDialog(this, "Check box 2 was pressed");
+    	else if(e.getSource() == Op3CB )
+        	JOptionPane.showMessageDialog(this, "Check box 3 was pressed");
+    	else if(e.getSource() == JCB)
+        	JOptionPane.showMessageDialog(this, JCB.getSelectedItem() + " was selected");
+    	else if(e.getSource() == QuestionsText)
+        	JOptionPane.showMessageDialog(this, "Text was entered");
     }
     
     /* Listener FOR right chose*/
-    class RightDialog implements ActionListener{
+    /*class RightDialog implements ActionListener{
          JDialog jDialog1=null; 						//create new null dialog
          RightDialog(JFrame jFrame){
             jDialog1=new JDialog(jFrame,"Dialog",true);	//set dialog
@@ -172,5 +176,5 @@ public class Assessor extends JFrame implements ActionListener{
                jDialog1.dispose();
             }
          }
-    }
+    }*/
 }
