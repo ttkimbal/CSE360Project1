@@ -22,7 +22,7 @@ public class Assessor extends JPanel implements ActionListener
 	// Declaring class variables
 	int state;
     JButton button1, button2, button3;
-    JComboBox comboBox;
+    JComboBox<String> comboBox;
     JCheckBox checkBox1, checkBox2, checkBox3;
     JTextField textField;
 	JPanel panel;
