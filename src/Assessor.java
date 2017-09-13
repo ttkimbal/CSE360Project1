@@ -156,7 +156,10 @@ public class Assessor extends JPanel implements ActionListener
 
 		// Combo box event
     	else if(e.getSource() == comboBox)
-        	JOptionPane.showMessageDialog(this, comboBox.getSelectedItem() + " was selected.");
+		{
+			item = comboBox.getSelectedItem();
+			JOptionPane.showMessageDialog(this, item + " was selected.");
+		}
 
 		// Text field event
     	else if(e.getSource() == textField)
