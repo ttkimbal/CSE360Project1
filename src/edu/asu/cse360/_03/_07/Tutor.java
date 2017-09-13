@@ -2,10 +2,12 @@
 Description: This class extends JPanel by loading HTML files that
 			 change based on JSlider position.
 CSE 360 Project 1
-Completion time:
+Completion time: 2 hours
 @author Jared Nathenson
 @version 1.0
 */
+
+package edu.asu.cse360._03._07;
 
 import java.awt.*;
 import javax.swing.*;
@@ -37,7 +39,7 @@ public class Tutor extends JPanel
     	removeAll();
 
 		// Create file name
-    	String filename = "../resources/P" + status + ".html";
+    	String filename = "resources/P" + status + ".html";
 
     	FileReader r = null;
 		try {

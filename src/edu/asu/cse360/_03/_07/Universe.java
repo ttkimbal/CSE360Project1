@@ -6,6 +6,8 @@ Completion time: 5 hours
 @version 1.0
 */
 
+package edu.asu.cse360._03._07;
+
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;

@@ -2,10 +2,12 @@
 Description: This class extends JPanel by adding images that change
 			 based on JSlider position.
 CSE 360 Project 1
-Completion time: 2 hours
+Completion time: 1 hour
 @author Team Effort
 @version 1.0
 */
+
+package edu.asu.cse360._03._07;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -39,13 +41,13 @@ public class Companion extends JPanel
 
 		// Switch between images for each state
     	switch (status) {
-    	case 1: path = "../resources/happy.png";
+    	case 1: path = "resources/happy.png";
     			break;
-    	case 2: path = "../resources/sorry.png";
+    	case 2: path = "resources/sorry.png";
     			break;
-    	case 3: path = "../resources/thinking.png";
+    	case 3: path = "resources/thinking.png";
     			break;
-    	case 4: path = "../resources/worry.png";
+    	case 4: path = "resources/worry.png";
     			break;
     	}
     	
