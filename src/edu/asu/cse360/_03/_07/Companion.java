@@ -1,10 +1,10 @@
 /**
 Description: This class extends JPanel by adding images that change
-			 based on JSlider position.
+			 based on JSlider position. Uses threads to animate the images.
 CSE 360 Project 1
-Completion time: 1 hour
-@author Team Effort
-@version 1.0
+Completion time: 2 hour
+@author Team Effort, Jared Nathenson
+@version 1.1
 */
 
 package edu.asu.cse360._03._07;
@@ -15,15 +15,19 @@ import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.event.*;
+
+import javafx.animation.AnimationTimer;
+
 import java.io.*;
 import java.net.URL;
 
-public class Companion extends JPanel
+public class Companion extends JPanel implements Runnable
 {
 	// Declaring class variables
-    int state;
-    private BufferedImage img;
-    private String path;
+	int state, cF = 0; //cF = currentFrame in the animation
+	protected ImageIcon[] images;
+	protected String mood;
+	private Thread th;
 
     public Companion()
     {
@@ -32,39 +36,45 @@ public class Companion extends JPanel
         setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
         add(new JLabel("Team Effort"), c);
+        th = new Thread(this); //creates new thread with current class thread as target
+        th.start();
     }
-
+    
     public void changeState(int status)
     {
 		// Clean panel
     	removeAll();
-
-		// Switch between images for each state
+    	
     	switch (status) {
-    	case 1: path = "resources/happy.png";
-    			break;
-    	case 2: path = "resources/sorry.png";
-    			break;
-    	case 3: path = "resources/thinking.png";
-    			break;
-    	case 4: path = "resources/worry.png";
-    			break;
+    	case 1 : mood = "happy"; break;
+    	case 2 : mood = "sorry"; break;
+    	case 3 : mood = "thinking"; break;
+    	case 4 : mood = "worry"; break;
     	}
     	
-    	try {
-    		img = ImageIO.read(new File(path));
-    	}
-		// Check if file exists
-		catch (IOException e) {
-    		System.out.println("The image " + path + " could not be loaded.");
-    	}
-    }
+    	images = new ImageIcon[4]; //Initialize array and load images
+    	for(int i = 0; i <= 3; i ++) {
+				images[i] = new ImageIcon("resources/" + mood + i + ".png");
+    	} 	
+}
     
     @Override
     protected void paintComponent(Graphics g) {
     	super.paintComponent(g);
-    	if(img != null) {
-    		g.drawImage(img, (this.getWidth())/4, (this.getWidth())/8, null);
+    	cF++; //Increment current frame in the sequence
+    	if(cF > 3) cF = 0; //if at final image, begin again at first image
+    	
+    	if(images != null)
+    		images[cF].paintIcon(this, g, 0, 0);
+    }
+    
+    public void run() {
+    	while(Thread.currentThread() == th) //thread is running
+    	try {
+    		repaint();
+    		Thread.sleep(250); //wait 250 milliseconds between each repaint
+    	} catch (InterruptedException e) {
+    		System.out.println("Something interrupted the animation thread.");
     	}
     }
 }
