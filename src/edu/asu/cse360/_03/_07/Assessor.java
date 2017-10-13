@@ -3,9 +3,9 @@ Description: This class extends JPanel and implements ActionListener
 			 by adding different question types that change based
 			 on JSlider position.
 CSE 360 Project 1
-Completion time: 5 hours
-@author Zhenyu Bao
-@version 1.0
+Completion time: 10 hours
+@author Zhenyu Bao, Jared Nathenson, Tristan Kimball
+@version 1.1
 */
 
 package edu.asu.cse360._03._07;
@@ -47,20 +47,27 @@ public class Assessor extends JPanel implements ActionListener
         
     public void changeState(Lesson lesson)
 	{
+		// Initialize lesson with current lesson
 		this.lesson = lesson;
+
 		// Clean panels
     	removeAll();
     	panel.removeAll();
     	setLayout(new BorderLayout());
     	
+		// Initialzie submit and hint buttons
     	submit = new JButton("Submit");
     	hint = new JButton("Hint");
+
+		// Get current lesson values
     	answers = lesson.getAnswers();
     	choices = lesson.getChoices();
     	hints = lesson.getHints();
     	
+		// Configure button lesson
     	if (lesson.getTypeA() == "button")
 		{
+			// Initialize GridBagConstraints
     		c.fill = GridBagConstraints.VERTICAL;
 			c.weightx = 1;
 			c.gridx = 0;
@@ -104,18 +111,23 @@ public class Assessor extends JPanel implements ActionListener
 			add(panel, BorderLayout.CENTER);
     		
     	}
+
+		// Configure dropdown question
 		else if (lesson.getTypeA() == "dropdown")
 		{
+			// Initialize GridBagConstraints
     		c.fill = GridBagConstraints.VERTICAL;
 			c.weightx = 1;
 			c.gridx = 0;
 			c.insets = new Insets(0,50,50,0);
 			
+			// Initialize ComboBox and add to panel
             comboBox =  new JComboBox<String>(choices);
             c.gridy = 1;
             panel.add(comboBox, c);
 			comboBox.addActionListener(this);
 			
+			// Add hint button to panel
 			c.gridy = 2;
 			panel.add(hint, c);
             hint.addActionListener(this);
@@ -128,6 +140,8 @@ public class Assessor extends JPanel implements ActionListener
         	add(new JLabel(lesson.getQuestion()), BorderLayout.NORTH);
         	add(panel, BorderLayout.CENTER);
     	}
+
+		// Configure checkbox question
 		else if (lesson.getTypeA() == "checkbox")
 		{
 			// Set GridBagConstraints for correct format
@@ -154,15 +168,18 @@ public class Assessor extends JPanel implements ActionListener
     		panel.add(checkBox3, c);
 			checkBox3.addActionListener(this);
 			
+			// Initialize check box 4 and add to panel
 			checkBox4 = new JCheckBox(choices[3]);
     		c.gridy = 4;
     		panel.add(checkBox4, c);
 			checkBox4.addActionListener(this);
 			
+			// Add hint button to panel
 			c.gridy = 5;
 			panel.add(hint, c);
             hint.addActionListener(this);
             
+			// Add submit button to panel
             c.gridy = 6;
             panel.add(submit, c);
             submit.addActionListener(this);
@@ -175,6 +192,8 @@ public class Assessor extends JPanel implements ActionListener
             add(new JLabel(lesson.getQuestion()), BorderLayout.NORTH);
             add(panel, BorderLayout.CENTER);
     	}
+
+		// Configure jtextfield questoin
 		else if (lesson.getTypeA() == "jtextfield")
 		{
 			// Set GridBagConstraints for correct format
@@ -189,11 +208,13 @@ public class Assessor extends JPanel implements ActionListener
     		textField.addActionListener(this);
     		panel.add(textField, c);
     		
+			// Add hint to panel
     		c.gridy = 2;
     		c.gridx = 1;
     		panel.add(hint, c);
             hint.addActionListener(this);
 
+			// Add warning label to panel
             c.gridy = 3;
             panel.add(new JLabel("Press Enter to submit your answer. Be careful, once enter is pressed all answers are final."), c);
             submit.addActionListener(this);
@@ -234,12 +255,13 @@ public class Assessor extends JPanel implements ActionListener
 			checkComboBox(item.toString());
 		}
 
-		// Text field event
+		// Textfield event
     	else if (e.getSource() == textField)
 		{
 			checkTextField(textField.getText());
 		}
     	
+		// Hints
     	else if (e.getSource() == hint)
 		{
     		displayHint(hints);
@@ -249,6 +271,8 @@ public class Assessor extends JPanel implements ActionListener
 	public void displayHint(String[] temp)
 	{
 		String hint = null;
+
+		// Iterate through array of hints
 		for (int i = 0; i < temp.length; i++) {
 			if (temp[i] != null) {
 				hint = hints[i];
@@ -256,17 +280,20 @@ public class Assessor extends JPanel implements ActionListener
 				break;
 			}
 		}
+
 		if (hint == null)
 		{
 			JOptionPane.showMessageDialog(this, "Sorry, you are out of hints.");
 			this.lesson.setAnswer(3);
 		}
+		// Display hint
 		else
 			JOptionPane.showMessageDialog(this, hint);
 	}
     
 	public void checkCheckBox(boolean a, boolean b, boolean c, boolean d)
 	{
+		// Assign string values for String Array of answers
 		String a1 = "wrong", a2 = "wrong", a3 = "wrong", a4 = "wrong";
 		if (a)
 			a1 = "right";
@@ -284,7 +311,10 @@ public class Assessor extends JPanel implements ActionListener
 	{
 		if (this.lesson.getNumAttempts() < this.lesson.getAttempts())
 		{
+			// Increment number of attempts used
 			this.lesson.setNumAttempts(this.lesson.getNumAttempts() + 1);
+			
+			// Initialize bool for correct answer to false
 			boolean cor = false;
 			if (a == choices[0] && answers[0] == "right")
 				cor = true;
@@ -297,6 +327,7 @@ public class Assessor extends JPanel implements ActionListener
 			
 			if (cor)
 			{
+				// Display feedback and update lesson and attempt label
 				JOptionPane.showMessageDialog(this, "You chose the correct answer!");
 				this.lesson.setAnswer(1);
 				attemptsLabel.setText("Answered Correctly.");
@@ -304,6 +335,7 @@ public class Assessor extends JPanel implements ActionListener
 			}
 			else
 			{
+				// Display feedback and update lesson and attempt label
 				JOptionPane.showMessageDialog(this, "Please try again.");
 				this.lesson.setAnswer(2);
 				attemptsLabel.setText("Remaining Attempts: " + (lesson.getAttempts() - lesson.getNumAttempts()));
@@ -311,6 +343,7 @@ public class Assessor extends JPanel implements ActionListener
 		}
 		else
 		{
+			// No attempts remaining, update lesson
 			JOptionPane.showMessageDialog(this, "Sorry you are out of attempts.");
 			this.lesson.setAnswer(3);
 		}
@@ -320,13 +353,17 @@ public class Assessor extends JPanel implements ActionListener
 	{
 		if (this.lesson.getNumAttempts() < this.lesson.getAttempts())
 		{
+			// Increment number of attempts used
 			this.lesson.setNumAttempts(this.lesson.getNumAttempts() + 1);
+
+			// Initialize bool for correct answer to false
 			boolean cor = false;
 			if (a == answers[0] && b == answers[1] && c == answers[2] && d == answers[3])
 				cor = true;
 			
 			if (cor)
 			{
+				// Display feedback and update lesson and attempt label
 				JOptionPane.showMessageDialog(this, "You chose the correct answer!");
 				this.lesson.setAnswer(1);
 				attemptsLabel.setText("Answered Correctly.");
@@ -334,6 +371,7 @@ public class Assessor extends JPanel implements ActionListener
 			}
 			else
 			{
+				// Display feedback and update lesson and attempt label
 				JOptionPane.showMessageDialog(this, "Please try again.");
 				this.lesson.setAnswer(2);
 				attemptsLabel.setText("Remaining Attempts: " + (lesson.getAttempts() - lesson.getNumAttempts()));
@@ -341,6 +379,7 @@ public class Assessor extends JPanel implements ActionListener
 		}
 		else
 		{
+			// No attempts remaining, update lesson
 			JOptionPane.showMessageDialog(this, "Sorry you are out of attempts.");
 			this.lesson.setAnswer(3);
 		}
@@ -350,9 +389,13 @@ public class Assessor extends JPanel implements ActionListener
 	{
 		if (this.lesson.getNumAttempts() < this.lesson.getAttempts())
 		{
+			// Increment number of attempts used
 			this.lesson.setNumAttempts(this.lesson.getNumAttempts() + 1);
+			
+			// Initialize bool for correct answer to false
 			boolean cor = false;
 
+			// Iterate through lesson answers and check if input is equal
 			for (int i = 0; i < this.lesson.getAnswers().length; i++)
 			{
 				if (this.lesson.getAnswers()[i].equals(text))
@@ -361,6 +404,7 @@ public class Assessor extends JPanel implements ActionListener
 
 			if (cor)
 			{
+				// Display feedback and update lesson and attempt label
 				JOptionPane.showMessageDialog(this, "You entered the correct answer!");
 				this.lesson.setAnswer(1);
 				attemptsLabel.setText("Answered Correctly.");
@@ -368,6 +412,7 @@ public class Assessor extends JPanel implements ActionListener
 			}
 			else
 			{
+				// Display feedback and update lesson and attempt label
 				JOptionPane.showMessageDialog(this, "Please try again.");
 				this.lesson.setAnswer(2);
 				attemptsLabel.setText("Remaining Attempts: " + (lesson.getAttempts() - lesson.getNumAttempts()));
@@ -375,6 +420,7 @@ public class Assessor extends JPanel implements ActionListener
 		}
 		else
 		{
+			// No attempts remaining, update lesson
 			JOptionPane.showMessageDialog(this, "Sorry you are out of attempts.");
 			this.lesson.setAnswer(3);
 		}

@@ -1,9 +1,9 @@
 /**
-Description: Runs the program, manages and organizes content JPanels.
+Description: Runs the program, manages and organizes content JPanels, initializes lessons.
 CSE 360 Project 1
-Completion time: 5 hours
-@author Tristan Kimball
-@version 1.0
+Completion time: 9 hours
+@author Tristan Kimball, Jared Nathenson
+@version 1.1
 */
 
 package edu.asu.cse360._03._07;
@@ -24,22 +24,27 @@ public class Universe extends JFrame
     Assessor assessorPanel;
     Companion companionPanel;
     
+    // Lesson answer choices
     String[] L1choices = {"Gizmo", "Fang", "Bolt", "Reptar"};
     String[] L2choices = {"ASU", "U of A", "NAU", "GCU"};
     String[] L3choices = {"Blue", "Red", "White", "Black"};
  
-    
+    // Lesson hints
 	String[] L1hints = {"Eliminate wrong answer: The answer is not Bolt.", "Helpful tip: He is a famous movie character you dont want to get wet!"};
 	String[] L2hints = {"Helpful Tip: Their colors are Maroon and Gold!"};
 	String[] L3hints = {"Identify right answer: Red is a color on the United States flag", "Eliminate wrong answer: Black is not on the United States flag"};
 	String[] L4hints = {"Helpful Tip: There literally isn't a wrong answer"};
 	
+    // Lesson correct and incorrect answers
 	String[] L1answers = {"right", "wrong", "wrong", "wrong"};
 	String[] L2answers = {"right", "wrong", "wrong", "wrong"};
 	String[] L3answers = {"right", "right", "right", "wrong"};
     String[] L4answers = {"blue", "red", "green", "yellow", "orange", "purple", "indigo", "violet", "cyan", "turqouise", "white", "black"};
+
+    // Instance of lesson
 	Lesson lesson;
 	
+    // Create Lesson 1
 	Lesson L1 = new Lesson(
 			"P1.html",
 			"button",
@@ -49,6 +54,7 @@ public class Universe extends JFrame
 			L1hints,
 			L1answers
 			);
+    // Create Lesson 2
 	Lesson L2 = new Lesson(
 			"P2.html",
 			"dropdown",
@@ -58,6 +64,7 @@ public class Universe extends JFrame
 			L2hints,
 			L2answers
 			);
+    // Create Lesson 3
 	Lesson L3 = new Lesson(
 			"P3.html",
 			"checkbox",
@@ -67,6 +74,7 @@ public class Universe extends JFrame
 			L3hints,
 			L3answers
 			);
+    // Create Lesson 4
 	Lesson L4 = new Lesson(
 			"P4.html",
 			"jtextfield",
@@ -135,18 +143,19 @@ public class Universe extends JFrame
                 // Notify panels of state change
                 int value = src.getValue();
                 switch(value) {
-                	case 1 : lesson = L1;
-                			    break;
-                	case 2 : lesson = L2;
-                				break;
-                	case 3 : lesson = L3;
-                				break;
-                	case 4 : lesson = L4;
-                				break;
+                	case 1: lesson = L1;
+                            break;
+                	case 2: lesson = L2;
+                			break;
+                	case 3: lesson = L3;
+                			break;
+                	case 4: lesson = L4;
+                			break;
                 	default:
-                				break;
+                			break;
                 }
         
+                // Notify panels of slider state
                 tutorPanel.changeState(lesson);
                 assessorPanel.changeState(lesson);
                 companionPanel.changeState(lesson);

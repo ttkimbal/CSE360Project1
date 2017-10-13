@@ -2,9 +2,9 @@
 Description: This class extends JPanel by adding images that change
 			 based on JSlider position. Uses threads to animate the images.
 CSE 360 Project 1
-Completion time: 2 hour
-@author Team Effort, Jared Nathenson
-@version 1.1
+Completion time: 3 hours
+@author Jared Nathenson, Tristan Kimball
+@version 1.2
 */
 
 package edu.asu.cse360._03._07;
@@ -43,16 +43,17 @@ public class Companion extends JPanel implements Runnable
     
     public void changeState(Lesson lesson)
     {
+		// Initialize lesson to current lesson
 		this.lesson = lesson;
-		//System.out.println(this.lesson.getAnswer());
+
 		// Clean panel
     	removeAll();
     	
     	switch (lesson.getAnswer()) {
-		case 0 : mood = "thinking"; break;
-		case 1 : mood = "happy"; break;
-		case 2 : mood = "worry"; break;
-    	case 3 : mood = "sorry"; break;
+			case 0: mood = "thinking"; break;
+			case 1: mood = "happy"; break;
+			case 2: mood = "worry"; break;
+    		case 3: mood = "sorry"; break;
     	}
     	
     	images = new ImageIcon[4]; //Initialize array and load images

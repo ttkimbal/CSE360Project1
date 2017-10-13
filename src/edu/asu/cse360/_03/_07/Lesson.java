@@ -1,3 +1,12 @@
+/**
+Description: This class is a data object holding information about
+			 a specific lesson. This simplifies and standardizes
+			 creating lessons.
+CSE 360 Project 1
+Completion time: 2 hours
+@author Jared Nathenson, Tristan Kimball
+@version 1.0
+*/
 package edu.asu.cse360._03._07;
 
 public class Lesson {
