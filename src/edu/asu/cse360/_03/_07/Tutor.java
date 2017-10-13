@@ -33,13 +33,13 @@ public class Tutor extends JPanel
         eP.setEditorKit(new HTMLEditorKit());
     }
 
-    public void changeState(int status)
+    public void changeState(Lesson lesson)
     {
 		// Clean panel
     	removeAll();
 
 		// Create file name
-    	String filename = "resources/P" + status + ".html";
+    	String filename = lesson.getHtml();
 
     	FileReader r = null;
 		try {
@@ -47,8 +47,7 @@ public class Tutor extends JPanel
 			// If the file exists
 			if(r != null) {
 				try {
-					eP.read(r, filename);	
-					
+					eP.read(r, filename);
 				}
 				// Check to see if the file can be read (all characters are valid)
 				catch (IOException | NullPointerException e) { 

@@ -28,6 +28,7 @@ public class Companion extends JPanel implements Runnable
 	protected ImageIcon[] images;
 	protected String mood;
 	private Thread th;
+	Lesson lesson;
 
     public Companion()
     {
@@ -40,29 +41,34 @@ public class Companion extends JPanel implements Runnable
         th.start();
     }
     
-    public void changeState(int status)
+    public void changeState(Lesson lesson)
     {
+		this.lesson = lesson;
+		//System.out.println(this.lesson.getAnswer());
 		// Clean panel
     	removeAll();
     	
-    	switch (status) {
-    	case 1 : mood = "happy"; break;
-    	case 2 : mood = "sorry"; break;
-    	case 3 : mood = "thinking"; break;
-    	case 4 : mood = "worry"; break;
+    	switch (lesson.getAnswer()) {
+		case 0 : mood = "thinking"; break;
+		case 1 : mood = "happy"; break;
+		case 2 : mood = "worry"; break;
+    	case 3 : mood = "sorry"; break;
     	}
     	
     	images = new ImageIcon[4]; //Initialize array and load images
     	for(int i = 0; i <= 3; i ++) {
-				images[i] = new ImageIcon("resources/" + mood + i + ".png");
+			images[i] = new ImageIcon("resources/" + mood + i + ".png");
     	} 	
-}
+	}
     
     @Override
     protected void paintComponent(Graphics g) {
     	super.paintComponent(g);
     	cF++; //Increment current frame in the sequence
-    	if(cF > 3) cF = 0; //if at final image, begin again at first image
+    	if(cF > 3)
+		{
+			cF = 0; //if at final image, begin again at first image
+		}
     	
     	if(images != null)
     		images[cF].paintIcon(this, g, 0, 0);
@@ -71,6 +77,9 @@ public class Companion extends JPanel implements Runnable
     public void run() {
     	while(Thread.currentThread() == th) //thread is running
     	try {
+			// If lesson isn't null then update the state with current lesson answer status
+			if (this.lesson != null)
+				changeState(this.lesson);
     		repaint();
     		Thread.sleep(250); //wait 250 milliseconds between each repaint
     	} catch (InterruptedException e) {
